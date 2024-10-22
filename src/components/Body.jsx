@@ -1,62 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-
-/* 
-* Header
-    - logo
-    - nav items
-* Body
-    - search
-    - Restaurant container
-        - Restaurant card
-            - Image
-            - Name of the Res, Star Rating, cuisin,.. etc
-* Footer
-    - Copyright
-    - Links
-    - Address
-    - Contact
-*/
-
-const Header = () => {
-  return (
-    <div className='header'>
-      <div>
-        <img
-          className='logo'
-          src='https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?industry=COMPANY+NAME'
-        />
-      </div>
-      <div className='nav-items'>
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Cart</li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-const RestaurantCard = ({ resData }) => {
-  console.log('resData', resData);
-  const { name, cuisines, avgRating, costForTwo } = resData?.info;
-  return (
-    <div className='res-card' style={{ backgroundColor: '#f0f0f0' }}>
-      <img
-        className='res-logo'
-        alt='res-image'
-        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resData.info.cloudinaryImageId}`}
-      />
-      <h3>{name}</h3>
-      <h4>{cuisines.join(', ')}</h4>
-      <h4>{avgRating}stars</h4>
-      <h4>{costForTwo}</h4>
-    </div>
-  );
-};
+import RestaurantCard from "./RestaurantCard";
 
 const resList = [
   {
@@ -1865,15 +1807,5 @@ const Body = () => {
   );
 };
 
-const App = () => {
-  return (
-    <div className='app'>
-      <Header />
-      <Body />
-    </div>
-  );
-};
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(<App />);
+export default Body;
