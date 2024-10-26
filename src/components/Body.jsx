@@ -5,7 +5,7 @@ import RestaurantCard from './RestaurantCard';
 import '../../index.css';
 
 const Body = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
   // let listOfRestaurants = [...resList];
   // console.log('listOfRestaurants before', listOfRestaurants);
   useEffect(() => {
