@@ -20,7 +20,10 @@ const Body = () => {
       );
       const json = await data.json();
       console.log('json', json);
-      setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setListOfRestaurants(
+        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
     } catch (err) {
       console.error(`Error while fetching the data ${err}`);
       throw err;
@@ -28,12 +31,15 @@ const Body = () => {
   };
 
   // render the loading
+  // conditinal rendering
   // listOfRestaurants.length === 0
-  if (!listOfRestaurants.length) {
-    return <Shimmer />
-  }
+  // if (!listOfRestaurants.length) {
+  //   return <Shimmer />;
+  // }
 
-  return (
+  return !listOfRestaurants.length ? (
+    <Shimmer />
+  ) : (
     <div className='body'>
       <div
         className='filter'
