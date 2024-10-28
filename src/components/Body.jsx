@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import resList from '../utils/mockData';
 import RestaurantCard from './RestaurantCard';
+import Shimmer from './Shimmer';
 import '../../index.css';
 
 const Body = () => {
@@ -25,6 +26,12 @@ const Body = () => {
       throw err;
     }
   };
+
+  // render the loading
+  // listOfRestaurants.length === 0
+  if (!listOfRestaurants.length) {
+    return <Shimmer />
+  }
 
   return (
     <div className='body'>
