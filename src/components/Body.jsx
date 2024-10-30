@@ -7,6 +7,7 @@ import '../../index.css';
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState('');
   // let listOfRestaurants = [...resList];
   // console.log('listOfRestaurants before', listOfRestaurants);
   useEffect(() => {
@@ -19,7 +20,7 @@ const Body = () => {
         'https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.89960&lng=80.22090&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
       );
       const json = await data.json();
-      console.log('json', json);
+      // console.log('json', json);
       setListOfRestaurants(
         json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
@@ -49,9 +50,28 @@ const Body = () => {
             (res) => res.info.avgRating > 4
           );
           setListOfRestaurants(filteredList);
-          console.log('resList after filter', filteredList);
+          // console.log('resList after filter', filteredList);
         }}
       >
+        <div className='search'>
+          <input
+            type='text'
+            className='search-box'
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value)
+            }}
+          />
+          <button
+            onClick={() => {
+              // filter the restaurant cards and update the ui
+              // search text
+              console.log(searchText);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button className='filter-btn'>Top Rated</button>
       </div>
       <div className='res-container'>
