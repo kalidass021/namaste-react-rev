@@ -7,10 +7,15 @@ import '../../index.css';
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState();
   const [searchText, setSearchText] = useState('');
+
   // let listOfRestaurants = [...resList];
   // console.log('listOfRestaurants before', listOfRestaurants);
+
+  console.log('Body rendered');
   useEffect(() => {
+    console.log('list of restaurants updated');
     fetchData();
   }, []);
 
@@ -21,10 +26,12 @@ const Body = () => {
       );
       const json = await data.json();
       // console.log('json', json);
-      setListOfRestaurants(
+      const restaurants =
         json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
+          ?.restaurants;
+      setListOfRestaurants(restaurants);
+      // initially
+      setFilteredRestaurants(restaurants);
     } catch (err) {
       console.error(`Error while fetching the data ${err}`);
       throw err;
@@ -38,10 +45,55 @@ const Body = () => {
   //   return <Shimmer />;
   // }
 
+  /*
+
+<button
+  onClick={() => {
+    console.log(searchText);
+    const filteredRestaurants = listOfRestaurants.filter(
+      (restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setListOfRestaurants(filteredRestaurants);
+  }}
+>
+  Search
+</button>
+
+
+  */
+
   return !listOfRestaurants.length ? (
     <Shimmer />
   ) : (
     <div className='body'>
+      <div className='search'>
+        <input
+          type='text'
+          className='search-box'
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            // filter the restaurant cards and update the ui
+            // search text
+            console.log(searchText);
+
+            const filteredBySearch = listOfRestaurants.filter((restaurant) =>
+              restaurant.info.name
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+            );
+
+            console.log('filteredRestaurants', filteredRestaurants);
+            setFilteredRestaurants(filteredBySearch);
+          }}
+        >
+          Search
+        </button>
+      </div>
       <div
         className='filter'
         onClick={() => {
@@ -53,29 +105,10 @@ const Body = () => {
           // console.log('resList after filter', filteredList);
         }}
       >
-        <div className='search'>
-          <input
-            type='text'
-            className='search-box'
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value)
-            }}
-          />
-          <button
-            onClick={() => {
-              // filter the restaurant cards and update the ui
-              // search text
-              console.log(searchText);
-            }}
-          >
-            Search
-          </button>
-        </div>
         <button className='filter-btn'>Top Rated</button>
       </div>
       <div className='res-container'>
-        {listOfRestaurants.map((restaurant) => (
+        {filteredRestaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant} />
         ))}
       </div>
