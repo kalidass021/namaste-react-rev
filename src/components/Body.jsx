@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import resList from '../utils/mockData';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
+import useOnlineStatus from '../utils/useOnlineStatus';
 import '../../index.css';
 import { Link } from 'react-router-dom';
 
@@ -38,6 +39,13 @@ const Body = () => {
       throw err;
     }
   };
+
+
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus) {
+    return <h1>Looks like you're offline!! Please check your internet connection...</h1>
+  }
 
   // render the loading
   // conditinal rendering
