@@ -40,11 +40,14 @@ const Body = () => {
     }
   };
 
-
   const onlineStatus = useOnlineStatus();
 
   if (!onlineStatus) {
-    return <h1>Looks like you're offline!! Please check your internet connection...</h1>
+    return (
+      <h1>
+        Looks like you're offline!! Please check your internet connection...
+      </h1>
+    );
   }
 
   // render the loading
@@ -74,17 +77,18 @@ const Body = () => {
   return !listOfRestaurants.length ? (
     <Shimmer />
   ) : (
-    <div className='body'>
-      <div className='search'>
+    <div className=''>
+      <div className='m-4 p-4'>
         <input
           type='text'
-          className='search-box'
+          className='border border-solid border-black'
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
           }}
         />
         <button
+          className='px-4 py-2 bg-green-100 m-4 rounded-lg'
           onClick={() => {
             // filter the restaurant cards and update the ui
             // search text
@@ -103,18 +107,20 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div
-        className='filter'
-        onClick={() => {
-          // filter logic here
-          const filteredList = listOfRestaurants.filter(
-            (res) => res.info.avgRating > 4
-          );
-          setListOfRestaurants(filteredList);
-          // console.log('resList after filter', filteredList);
-        }}
-      >
-        <button className='filter-btn'>Top Rated</button>
+      <div className=''>
+        <button
+          className='px-4 py2 bg-gray-100 rounded-lg'
+          onClick={() => {
+            // filter logic here
+            const filteredList = listOfRestaurants.filter(
+              (res) => res.info.avgRating > 4
+            );
+            setListOfRestaurants(filteredList);
+            // console.log('resList after filter', filteredList);
+          }}
+        >
+          Top Rated
+        </button>
       </div>
       <div className='res-container'>
         {filteredRestaurants.map((restaurant) => (
