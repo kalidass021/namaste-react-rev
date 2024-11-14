@@ -20,4 +20,17 @@ const RestaurantCard = ({ resData }) => {
   );
 };
 
+// Higher order component (function)
+
+// input - RestaurantCard => output - RestaurantCardWithSpeedyLabel
+
+export const withSpeedyLabel = (RestaurantCard) => {
+  return (props) => {
+    return <div>
+      <h1 className='absolute bg-black text-white m-2 p-2 rounded-lg'>Speedy</h1>
+      <RestaurantCard {...props}/>
+    </div>
+  }
+}
+
 export default RestaurantCard;

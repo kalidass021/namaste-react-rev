@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import resList from '../utils/mockData';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard, { withSpeedyLabel } from './RestaurantCard';
 import Shimmer from './Shimmer';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import '../../index.css';
@@ -12,10 +12,12 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState();
   const [searchText, setSearchText] = useState('');
 
+  const RestaurantCardSpeedy = withSpeedyLabel(RestaurantCard);
+
   // let listOfRestaurants = [...resList];
   // console.log('listOfRestaurants before', listOfRestaurants);
 
-  console.log('Body rendered');
+  console.log('listOfRestaurants', listOfRestaurants);
   useEffect(() => {
     console.log('list of restaurants updated');
     fetchData();
@@ -128,7 +130,13 @@ const Body = () => {
             key={restaurant.info.id}
             to={`/restaurants/${restaurant.info.id}`}
           >
-            <RestaurantCard resData={restaurant} />
+            {/* if deliveryTime is < 30 add speedy label to it */}
+            {
+              restaurant?.info?.sla?.deliveryTime < 30 ? (
+              <RestaurantCardSpeedy resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>
